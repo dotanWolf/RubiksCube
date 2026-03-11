@@ -15,10 +15,15 @@ private:
     map<string, Move *> moveMap;
 
 public:
-    Cube(map<string, Move *> moveMap);
+    Cube(array<Corner,8 > corners, map<string, Move *> moveMap);
+    Cube();
+    Cube(Cube* cube);
     void applyMove(int mask[], int ori_diff[]);
     void showState();
-    void scramble();
+    map<string, Move *> getMoveMap();
+    string getKey();
+    bool isGoal();
+    map<Move*, Cube*> succesor();
 };
 
 #endif

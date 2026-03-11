@@ -12,6 +12,10 @@ set(SRCS
     Cpp/Cube.cpp
     Cpp/Edge.cpp
     Cpp/main.cpp
+    Cpp/App.cpp
+    Cpp/AStarSolver.cpp
+    Cpp/Node.cpp
+    Cpp/Move.cpp
    )
 
 # MyProject is the server. 
