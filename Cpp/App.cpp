@@ -25,24 +25,33 @@ void App::scramble()
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> dis(0, cube->getMoveMap().size() - 1);
-    for (int i = 0; i < 6; i++)
+    std::cout << "Scramble is" << std::endl;
+
+    for (int i = 0; i < 100; i++)
     {
         int randomIndex = dis(gen);
         auto it = std::next(cube->getMoveMap().begin(), randomIndex);
         int *mask = it->second->getMask();
         int *diff = it->second->getDiff();
 
+        std::cout << it->second->getName() << " ";
+
         cube->applyMove(it->second->getMask(), it->second->getDiff());
+        // cube->showState();
     }
+    std::cout << std::endl;
 }
 
 void App::solve()
 {
     solution = solver->solve(cube);
+    std::cout << "Solution is" << std::endl;
+
     for (auto &move : solution)
     {
-        std::cout << move->getName() << " " << std::endl;
+        std::cout << move->getName() << " ";
     }
+    std::cout << std::endl;
 }
 
 Cube *App::getCube()

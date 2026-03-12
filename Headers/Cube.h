@@ -24,6 +24,7 @@ public:
     string getKey();
     bool isGoal();
     map<Move*, Cube*> succesor();
+    array<Corner, 8> getCorners();
 };
 
 #endif

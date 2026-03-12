@@ -37,13 +37,10 @@ vector<Move *> AStarSolver::solve(Cube *cube)
         {
             closed.insert(currentKey);
 
-
             distance[currentKey] = currentNode->getGValue();
-
 
             if (currentState->isGoal())
             {
-
                 return currentNode->extractSolution();
             }
             for (auto &[move, newState] : currentState->succesor())
@@ -59,5 +56,11 @@ vector<Move *> AStarSolver::solve(Cube *cube)
 
 int AStarSolver::heuristic(Cube *cube)
 {
-    return 0;
+    int cost = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        cost += cube->getCorners()[i].getOrientation() != 0 ? 1 : 0;
+        cost += cube->getCorners()[i].getIndex() != i ? 1 : 0;
+    }
+    return cost / 4;
 }
