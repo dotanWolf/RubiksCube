@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     App app(solver);
 
     app.scramble();
+
     app.solve();
     // app.getCube()->showState();
 

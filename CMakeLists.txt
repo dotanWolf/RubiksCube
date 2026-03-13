@@ -16,6 +16,8 @@ set(SRCS
     Cpp/AStarSolver.cpp
     Cpp/Node.cpp
     Cpp/Move.cpp
+    Cpp/MoveFactory.cpp
+    Cpp/Piece.cpp
    )
 
 # MyProject is the server. 

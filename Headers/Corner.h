@@ -1,19 +1,14 @@
 #ifndef CORNER_H
 #define CORNER_H
 
-class Corner
+#include "Piece.h"
+
+class Corner : public Piece
 {
-private:
-    int index;
-    int orientation;
 
 public:
     Corner(int orientation, int index);
     Corner();
-    void setIndex(int index);
-    int getIndex();
-    void setOrientation(int orientation);
-    int getOrientation();
 };
 
 #endif

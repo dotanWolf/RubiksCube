@@ -2,17 +2,24 @@
 #define MOVE_H
 
 #include <string>
+#include <vector>
+using namespace std;
+class Move
+{
+private:
+    vector<int> cornerMask;
+    vector<int> cornerOriDiff;
+    vector<int> edgeMask;
+    vector<int> edgeOriDiff;
+    std::string name;
 
-class Move {
-    private:
-        int* mask;
-        int* diff;
-        std::string name;
-    public:
-        Move(int* mask, int* diff, std::string name);
-        int* getMask();
-        int* getDiff();
-        std::string getName();
+public:
+    Move(vector<int> cornerMask, vector<int> cornerOriDiff, vector<int> edgeMask, vector<int> edgeOriDiff, std::string name);
+    vector<int> getCornerMask();
+    vector<int> getCornerOriDiff();
+    vector<int> getEdgeMask();
+    vector<int> getEdgeOriDiff();
+    std::string getName();
 };
 
 #endif

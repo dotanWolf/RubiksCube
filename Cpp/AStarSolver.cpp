@@ -19,6 +19,7 @@ struct CompareNode
 
 vector<Move *> AStarSolver::solve(Cube *cube)
 {
+
     int counter = 0;
     priority_queue<Node *, vector<Node *>, CompareNode> open;
     open.push(new Node(cube, NULL, NULL, 0, heuristic(cube)));
@@ -32,17 +33,16 @@ vector<Move *> AStarSolver::solve(Cube *cube)
         Cube *currentState = currentNode->getState();
         string currentKey = currentState->getKey();
         open.pop();
-        // std::cout << counter << std::endl;
         if (closed.find(currentKey) == closed.end() || currentNode->getGValue() < distance[currentKey])
         {
             closed.insert(currentKey);
-
             distance[currentKey] = currentNode->getGValue();
 
             if (currentState->isGoal())
             {
                 return currentNode->extractSolution();
             }
+
             for (auto &[move, newState] : currentState->succesor())
             {
                 Node *newNode = new Node(newState, currentNode, move, currentNode->getGValue() + 1, heuristic(newState));
@@ -56,11 +56,5 @@ vector<Move *> AStarSolver::solve(Cube *cube)
 
 int AStarSolver::heuristic(Cube *cube)
 {
-    int cost = 0;
-    for (int i = 0; i < 8; i++)
-    {
-        cost += cube->getCorners()[i].getOrientation() != 0 ? 1 : 0;
-        cost += cube->getCorners()[i].getIndex() != i ? 1 : 0;
-    }
-    return cost / 4;
+    return cube->NumMisplacedPieces() / cube->numPiecesInFace();
 }

@@ -1,9 +1,13 @@
 #ifndef EDGE_H
 #define EDGE_H
 
-class Edge {
-    private:
-        int orientation;
+#include "Piece.h"
+
+class Edge : public Piece
+{
+public:
+    Edge(int index, int orientation);
+    Edge();
 };
 
 #endif

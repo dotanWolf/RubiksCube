@@ -1,26 +1,35 @@
 #include "Move.h"
 #include <string>
+#include <vector>
+using namespace std;
 
-Move::Move(int *mask, int *diff, std::string name) : name(name)
+Move::Move(vector<int> cornerMask, vector<int> cornerOriDiff, vector<int> edgeMask, vector<int> edgeOriDiff, std::string name)
 {
-    this->mask = new int[8];
-    this->diff = new int[8];
-    for (int i = 0; i < 8; i++)
-    {
-        this->mask[i] = mask[i];
-        this->diff[i] = diff[i];
-    }
-}
-int *Move::getMask()
-{
-    return this->mask;
-}
-int *Move::getDiff()
-{
-    return this->diff;
+    this->cornerMask = cornerMask;
+    this->cornerOriDiff = cornerOriDiff;
+    this->edgeMask = edgeMask;
+    this->edgeOriDiff = edgeOriDiff;
+    this->name = name;
 }
 
 std::string Move::getName()
 {
     return name;
+}
+
+vector<int> Move::getCornerMask()
+{
+    return cornerMask;
+}
+vector<int> Move::getCornerOriDiff()
+{
+    return cornerOriDiff;
+}
+vector<int> Move::getEdgeMask()
+{
+    return edgeMask;
+}
+vector<int> Move::getEdgeOriDiff()
+{
+    return edgeOriDiff;
 }

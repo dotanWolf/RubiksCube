@@ -4,13 +4,13 @@
 #include "Cube.h"
 #include <iostream>
 
-void printMap(map<string, Move *> moveMap)
-{
-    for (auto &[name, move] : moveMap)
-    {
-        std::cout << move->getDiff()[0] << std::endl;
-    }
-}
+// void printMap(map<string, Move *> moveMap)
+// {
+//     for (auto &[name, move] : moveMap)
+//     {
+//         std::cout << move->getDiff()[0] << std::endl;
+//     }
+// }
 
 App::App(AStarSolver *solver)
 {
@@ -21,22 +21,13 @@ App::App(AStarSolver *solver)
 
 void App::scramble()
 {
-    map<string, Move *> moveMap = cube->getMoveMap();
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dis(0, cube->getMoveMap().size() - 1);
     std::cout << "Scramble is" << std::endl;
-
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 8; i++)
     {
-        int randomIndex = dis(gen);
-        auto it = std::next(cube->getMoveMap().begin(), randomIndex);
-        int *mask = it->second->getMask();
-        int *diff = it->second->getDiff();
+        std::string name = cube->chooseRandomMove();
+        std::cout << name << " ";
 
-        std::cout << it->second->getName() << " ";
-
-        cube->applyMove(it->second->getMask(), it->second->getDiff());
+        cube->applyMove(name);
         // cube->showState();
     }
     std::cout << std::endl;
@@ -44,6 +35,7 @@ void App::scramble()
 
 void App::solve()
 {
+
     solution = solver->solve(cube);
     std::cout << "Solution is" << std::endl;
 
