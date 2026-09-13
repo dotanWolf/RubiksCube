@@ -12,25 +12,25 @@
 //     }
 // }
 
-App::App(AStarSolver *solver)
+App::App(AStarSolver *solver, Cube* cube)
 {
     this->solver = solver;
-    this->cube = new Cube();
+    this->cube = cube;
     this->solution = {};
 }
 
 void App::scramble()
 {
     std::cout << "Scramble is" << std::endl;
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 20; i++)
     {
         std::string name = cube->chooseRandomMove();
         std::cout << name << " ";
 
         cube->applyMove(name);
-        // cube->showState();
     }
     std::cout << std::endl;
+    cube->showState();
 }
 
 void App::solve()
@@ -38,12 +38,12 @@ void App::solve()
 
     solution = solver->solve(cube);
     std::cout << "Solution is" << std::endl;
-
+    numOfMoves = solution.size();
     for (auto &move : solution)
     {
         std::cout << move->getName() << " ";
+        std::cout << "this is the number of moves: " << numOfMoves << std::endl;
     }
-    std::cout << std::endl;
 }
 
 Cube *App::getCube()

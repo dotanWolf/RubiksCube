@@ -1,22 +1,16 @@
-#include <iostream>
-#include <stdio.h>
-#include <cstdlib>
-#include "Corner.h"
-#include <array>
-#include "Cube.h"
-#include <vector>
 #include "AStarSolver.h"
 #include "App.h"
-
-using namespace std;
+#include "Cube.h"
 
 int main(int argc, char *argv[])
 {
     AStarSolver *solver = new AStarSolver();
-    App app(solver);
+    Cube *cube = new Cube(3);
+    App app(solver, cube);
 
     app.scramble();
-
+    // cube->applyMove("L");
+    // cube->showState();
     app.solve();
     // app.getCube()->showState();
 

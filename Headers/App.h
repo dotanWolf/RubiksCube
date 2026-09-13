@@ -12,7 +12,7 @@ class App {
         Cube* cube;
         vector<Move*> solution;
     public:
-        App(AStarSolver* solver);
+        App(AStarSolver* solver, Cube* cube);
         void scramble();
         void solve();
         Cube* getCube();
