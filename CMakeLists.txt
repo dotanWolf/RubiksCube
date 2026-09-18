@@ -9,20 +9,20 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add include directory
-include_directories(Headers)
+include_directories(backend/Headers)
 
 set(SRCS
-    Cpp/Corner.cpp
-    Cpp/Cube.cpp
-    Cpp/Edge.cpp
-    Cpp/main.cpp
-    Cpp/App.cpp
-    Cpp/AStarSolver.cpp
-    Cpp/Node.cpp
-    Cpp/Move.cpp
-    Cpp/MoveFactory.cpp
-    Cpp/Piece.cpp
-    Cpp/CubieCube.cpp
+    backend/Cpp/Corner.cpp
+    backend/Cpp/Cube.cpp
+    backend/Cpp/Edge.cpp
+    backend/Cpp/main.cpp
+    backend/Cpp/App.cpp
+    backend/Cpp/AStarSolver.cpp
+    backend/Cpp/SearchNode.cpp
+    backend/Cpp/Move.cpp
+    backend/Cpp/MoveFactory.cpp
+    backend/Cpp/Piece.cpp
+    backend/Cpp/CubieCube.cpp
    )
 
 # MyProject is the server. 

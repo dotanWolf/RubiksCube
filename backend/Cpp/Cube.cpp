@@ -315,10 +315,19 @@ int Cube::NumMisplacedPieces()
     return counter;
 }
 
-std::string Cube::chooseRandomMove()
+std::string Cube::chooseRandomMove(std::string lastMove)
 {
-    random_device rd;
-    mt19937 gen(rd());
+    static random_device rd;
+    static mt19937 gen(rd());
     uniform_int_distribution<> dis(0, moves.size() - 1);
-    return moves[dis(gen)];
+
+    char lastFace = lastMove.empty() ? '\0' : lastMove[0];
+
+    std::string candidate;
+    do
+    {
+        candidate = moves[dis(gen)];
+    } while (!lastMove.empty() && candidate[0] == lastFace);
+
+    return candidate;
 }

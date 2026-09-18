@@ -1,6 +1,6 @@
 #include "AStarSolver.h"
 #include "CubieCube.h"
-#include "Node.h"
+#include "SearchNode.h"
 #include <algorithm>
 #include <iostream>
 #include <queue>
@@ -42,25 +42,25 @@ bool allowedMove(int move, int lastMove)
 
 void initilizeDb(map<string, int> &Db)
 {
-    queue<Cube *> nodeQueue;
+    queue<Cube *> SearchNodeQueue;
     Cube *solvedCube = new Cube(2);
-    nodeQueue.push(solvedCube);
+    SearchNodeQueue.push(solvedCube);
     Db[solvedCube->getKey()] = 0;
     int distance = 0;
 
-    while (!nodeQueue.empty())
+    while (!SearchNodeQueue.empty())
     {
-        int layerSize = nodeQueue.size();
+        int layerSize = SearchNodeQueue.size();
         for (int i = 0; i < layerSize; i++)
         {
-            Cube *currentCube = nodeQueue.front();
-            nodeQueue.pop();
+            Cube *currentCube = SearchNodeQueue.front();
+            SearchNodeQueue.pop();
             for (auto &[move, newState] : currentCube->succesor())
             {
                 if (Db.find(newState->getKey()) == Db.end())
                 {
                     Db[newState->getKey()] = distance + 1;
-                    nodeQueue.push(newState);
+                    SearchNodeQueue.push(newState);
                 }
             }
         }
@@ -69,7 +69,7 @@ void initilizeDb(map<string, int> &Db)
     }
 }
 
-AStarSolver::AStarSolver() {}
+AStarSolver::AStarSolver() : tablesReady(false) {}
 
 bool AStarSolver::allowed(int move, int lastMove)
 {
@@ -345,9 +345,9 @@ vector<Move *> AStarSolver::solve3x3(Cube *cube)
     return solution;
 }
 
-struct CompareNode
+struct CompareSearchNode
 {
-    bool operator()(Node *a, Node *b)
+    bool operator()(SearchNode *a, SearchNode *b)
     {
         return a->getGValue() + a->getHValue() > b->getGValue() + b->getHValue();
     }
@@ -355,31 +355,31 @@ struct CompareNode
 
 vector<Move *> AStarSolver::solve2x2(Cube *cube)
 {
-    priority_queue<Node *, vector<Node *>, CompareNode> open;
-    open.push(new Node(cube, NULL, NULL, 0, heuristic(cube)));
+    priority_queue<SearchNode *, vector<SearchNode *>, CompareSearchNode> open;
+    open.push(new SearchNode(cube, NULL, NULL, 0, heuristic(cube)));
     set<string> closed;
     map<string, int> distance;
 
     while (!open.empty())
     {
-        Node *currentNode = open.top();
-        Cube *currentState = currentNode->getState();
+        SearchNode *currentSearchNode = open.top();
+        Cube *currentState = currentSearchNode->getState();
         string currentKey = currentState->getKey();
         open.pop();
-        if (closed.find(currentKey) == closed.end() || currentNode->getGValue() < distance[currentKey])
+        if (closed.find(currentKey) == closed.end() || currentSearchNode->getGValue() < distance[currentKey])
         {
             closed.insert(currentKey);
-            distance[currentKey] = currentNode->getGValue();
+            distance[currentKey] = currentSearchNode->getGValue();
 
             if (currentState->isGoal())
             {
-                return currentNode->extractSolution();
+                return currentSearchNode->extractSolution();
             }
 
             for (auto &[move, newState] : currentState->succesor())
             {
-                Node *newNode = new Node(newState, currentNode, move, currentNode->getGValue() + 1, heuristic(newState));
-                open.push(newNode);
+                SearchNode *newSearchNode = new SearchNode(newState, currentSearchNode, move, currentSearchNode->getGValue() + 1, heuristic(newState));
+                open.push(newSearchNode);
             }
         }
     }

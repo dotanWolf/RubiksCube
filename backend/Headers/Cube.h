@@ -51,7 +51,7 @@ public:
     string getKey();
     bool isGoal();
     map<Move *, Cube *> succesor();
-    std::string chooseRandomMove();
+    std::string chooseRandomMove(string lastMove);
     int NumMisplacedPieces();
     int numPiecesInFace();
     int size() const;
